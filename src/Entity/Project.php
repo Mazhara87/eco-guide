@@ -29,6 +29,7 @@ class Project
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: ProjectSupporter::class)]
     private Collection $projectSupporter;
 
+    //DEFAULT VALUES
     public function __construct()
     {
         $this->projectSupporter = new ArrayCollection();

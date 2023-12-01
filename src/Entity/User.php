@@ -6,10 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -41,15 +43,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProjectSupporter::class)]
     private Collection $projectSupporters;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
-    private Collection $articles;
+   
 
+    // DEFAULT VALUES
     public function __construct()
     {
         $this->forumPosts = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->projectSupporters = new ArrayCollection();
-        $this->articles = new ArrayCollection();
+    }
+
+    // WHEN YOU WANT TO DISPLAY AN OBJECT
+    public function __toString()
+    {
+        return $this->name.' - '. $this->email;
     }
 
     public function getId(): ?int
@@ -218,36 +225,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($projectSupporter->getUser() === $this) {
                 $projectSupporter->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Article>
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): static
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): static
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getUser() === $this) {
-                $article->setUser(null);
             }
         }
 

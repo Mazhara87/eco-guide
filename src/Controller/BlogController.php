@@ -29,9 +29,9 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/blog/{id}', name: 'app_blog_post')]
-    public function show(int $id): Response
-    {
-        // Логика для отображения отдельного поста (если нужно)
-    }
+    // #[Route('/blog/{id}', name: 'app_blog_post')]
+    // public function show(int $id): Response
+    // {
+    //     // Логика для отображения отдельного поста (если нужно)
+    // }
 }

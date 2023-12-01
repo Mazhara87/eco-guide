@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ForumPostRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +23,12 @@ class ForumPost
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    // DEFAULT VALUES
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     #[ORM\ManyToOne(inversedBy: 'forumPosts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,17 +63,6 @@ class ForumPost
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {
@@ -79,4 +75,17 @@ class ForumPost
 
         return $this;
     }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
 }
