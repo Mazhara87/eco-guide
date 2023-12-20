@@ -21,6 +21,9 @@ class ForumPost
     #[ORM\Column(type: Types::TEXT)]
     private ?string $text = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $summary = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -87,5 +90,19 @@ class ForumPost
 
         return $this;
     }
+
+    public function getSummary(): ?string
+    {
+        // $this->summary;
+        return $this->summary;
+    }
+
+    public function setSummary(?string $summary): static
+    {
+       
+        $this->summary = $summary;
+        return $this;
+    }
+  
 
 }

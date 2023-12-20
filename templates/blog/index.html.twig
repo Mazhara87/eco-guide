@@ -6,11 +6,12 @@
 {% block body %}
     <h1>Blog et Actualités</h1>
 
-    {% for post in posts %}
+    {% for article in articles %}
         <article>
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.content }}</p>
-            <a href="{{ path('app_blog_post', {'id': post.id}) }}">Lire la suite</a>
+            <h2>{{ article.title }}</h2>
+            {{ article.text | raw }}
+            <img src="assets/uploads/{{ article.image }}" />
+          
         </article>
     {% endfor %}
 

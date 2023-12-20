@@ -45,4 +45,14 @@ class ForumPostRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findLatestPost(int $limit=3)
+   {
+       return $this->createQueryBuilder('p')
+       ->orderBy('p.createdAt', 'DESC')
+           //->andWhere('f.exampleField = :val')
+            ->setMaxResults($limit)
+           ->getQuery()
+           ->getResult();
+   }
 }
