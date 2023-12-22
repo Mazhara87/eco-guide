@@ -20,6 +20,19 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+    
+   /**
+     * @param int $limit
+     * @return Project[]
+     */
+    public function findFeaturedProjects($limit = 3): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Project[] Returns an array of Project objects

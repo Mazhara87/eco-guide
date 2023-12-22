@@ -3,30 +3,71 @@
 {% block title %}Accueil - EcoGuide{% endblock %}
 
 {% block body %}
-  <div class="hero-banner">
-    <img src="{{ asset('images/hero-banner.jpg') }}" alt="Nature Banner">
-    <h1>Guidons le changement, préservons notre environnement</h1>
-  </div>
+  <body class="home">
+    <div class="hero-banner">
+      <img src="{{ asset('assets/images/banner.jpg') }}" alt="Nature Banner">
+      <h1>Guidons le changement, préservons notre environnement</h1>
+    </div>
 
-  <section class="latest-news">
-    <h2>Dernières actualités</h2>
-    {% for post in latest_posts %}
-      <article>
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.summary }}</p>
-        <a href="{{ path('blog_post', {'id': post.id}) }}">Lire la suite</a>
-      </article>
-    {% endfor %}
-  </section>
+    <section class="latest-news">
+      <h2>Dernières actualités</h2>
+      {% for post in latest_posts %}
+        <article>
+          <h3>{{ post.getTitle() }}</h3>
+          <p>{{ post.getSummary() }}</p>
+          <a href="{{ path('app_blog', {'id': post.getId()}) }}">Lire la suite</a>
+        </article>
+      {% endfor %}
+    </section>
 
-  <section class="featured-projects">
-    <h2>Projets en vedette</h2>
-    {% for project in featured_projects %}
-      <div>
-        <h3>{{ project.title }}</h3>
-        <p>{{ project.description }}</p>
-        <a href="{{ path('project_details', {'id': project.id}) }}">Détails du projet</a>
-      </div>
-    {% endfor %}
-  </section>
+    <section class="featured-projects">
+      <h2>Projets en vedette</h2>
+      {% for project in featured_projects %}
+        <article>
+          <h3>{{ project.getName() }}</h3>
+          <p>{{ project.getDescription()|raw }}</p>
+          <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a>
+        </article>
+      {% endfor %}
+    </section>
+
+    <section class="utilization">
+      <h2>Утилизация и сортировка</h2>
+      <p>Заголовок и описание раздела.</p>
+
+      <section>
+        <h3>Инструкции по сортировке мусора</h3>
+        <!-- Добавьте секции с инструкциями, графическими иллюстрациями и анимациями -->
+      </section>
+
+      <section>
+        <h3>Полезные советы</h3>
+        <!-- Добавьте блок с полезными советами -->
+      </section>
+    </section>
+
+    <section class="community">
+      <h2>Сообщество и форум</h2>
+      <p>Заголовок и описание раздела.</p>
+
+      <section>
+        <h3>Форум</h3>
+        <!-- Добавьте форум для обсуждения, профили участников и форму для создания новых тем и сообщений -->
+      </section>
+    </section>
+
+    <!-- Добавьте раздел "Проекты и инициативы" -->
+    <section class="projects">
+      <h2>Проекты и инициативы</h2>
+      <p>Заголовок и описание раздела.</p>
+
+      <section>
+        <h3>Текущие проекты</h3>
+        <!-- Добавьте список текущих проектов с краткими описаниями и изображениями -->
+      </section>
+    </section>
+
+    <!-- Аналогично добавьте разделы для "Блога и новостей", "Контактов и подписки", "Профиля пользователя" и "Страницы проекта" -->
+    
+  </body>
 {% endblock %}
