@@ -1,0 +1,77 @@
+/* Стили для общего контейнера */
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  
+  /* Стили для внутреннего контейнера с баннером */
+  .container .banner-section {
+    grid-column: 1 / -1;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Ваши остальные стили остаются без изменений */
+  .carousel-inner {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .carousel-item {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  
+  .carousel-item:hover {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+  
+  .latest-news,
+  .featured-projects,
+  .utilization,
+  .community,
+  .projects {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .latest-news:focus,
+  .featured-projects:focus,
+  .utilization:focus,
+  .community:focus,
+  .projects:focus {
+    z-index: 2;
+    transform: translateY(-50px);
+  }
+  
+  /* Стили для баннера */
+  .banner-section img {
+    width: 100%;
+    height: 500px;
+  }
+  
+  .banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+  }
+  
+  .banner-content h1 {
+    margin: 0;
+    font-size: 2em;
+    text-align: center;
+  }
+  

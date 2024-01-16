@@ -2,72 +2,151 @@
 
 {% block title %}Accueil - EcoGuide{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/carousel.css') }}">
+    <style>
+        /* Ваши стили остаются без изменений */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .carousel-item {
+            cursor: pointer;
+            opacity: 0.8; 
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* Поднимаем карточку при наведении */
+        .carousel-item:hover {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+
+        /* Добавляем стили для каждой секции */
+        .latest-news,
+        .featured-projects,
+        .utilization,
+        .community,
+        .projects {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        /* Перемещаем секцию вверх при фокусе */
+        .latest-news:focus,
+        .featured-projects:focus,
+        .utilization:focus,
+        .community:focus,
+        .projects:focus {
+            z-index: 2;
+            transform: translateY(-50px);
+        }
+        #test{
+display: flex;
+flex-direction: column
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
   <body class="home">
-    <div class="hero-banner">
-      <img src="{{ asset('assets/images/banner.jpg') }}" alt="Nature Banner">
-      <h1>Guidons le changement, préservons notre environnement</h1>
+<!-- Hero Banner -->
+    <div class="banner-section">
+        <img src="{{ asset('assets/images/banner.jpg') }}" alt="Nature Banner">
+        <div class="banner-content">
+            <h1>Guidons le changement, préservons notre environnement</h1>
+        </div>
     </div>
 
-    <section class="latest-news">
-      <h2>Dernières actualités</h2>
-      {% for post in latest_posts %}
-        <article>
-          <h3>{{ post.getTitle() }}</h3>
-          <p>{{ post.getSummary() }}</p>
-          <a href="{{ path('app_blog', {'id': post.getId()}) }}">Lire la suite</a>
-        </article>
-      {% endfor %}
+    <div class="container">
+        <!-- Section for Cards -->
+        <section class="card-section container">
+        <!-- Carousel for Latest News -->
+        <div class="carousel-item latest-news" tabindex="0">
+            <section>
+                <h2>Dernières actualités</h2>
+                {% for post in latest_posts %}
+                    <article>
+                        <h3>{{ post.getTitle() }}</h3>
+                        <p>{{ post.getSummary() }}</p>
+                        <a href="{{ path('app_blog', {'id': post.getId()}) }}">Lire la suite</a>
+                    </article>
+                {% endfor %}
+            </section>
+        </div>
+
+        <!-- Carousel for Featured Projects -->
+        <div class="carousel-item featured-projects" tabindex="0">
+            <section>
+                <h2>Projets en vedette</h2>
+                {% for project in featured_projects %}
+                    <article>
+                        <h3>{{ project.getName() }}</h3>
+                        <p>{{ project.getDescription()|raw }}</p>
+                        <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a>
+                    </article>
+                {% endfor %}
+            </section>
+        </div>
+
+        <!-- Carousel for Utilization and Sorting -->
+        <div class="carousel-item utilization" tabindex="0">
+            <section>
+                <h2>Утилизация и сортировка</h2>
+                <p>Заголовок и описание раздела.</p>
+                <section>
+                    <h3>Инструкции по сортировке мусора</h3>
+                    <!-- Добавьте секции с инструкциями, графическими иллюстрациями и анимациями -->
+                </section>
+                <section>
+                    <h3>Полезные советы</h3>
+                    <!-- Добавьте блок с полезными советами -->
+                </section>
+            </section>
+        </div>
+
+        <!-- Carousel for Community and Forum -->
+        <div class="carousel-item community" tabindex="0">
+            <section>
+                <h2>Сообщество и форум</h2>
+                <p>Заголовок и описание раздела.</p>
+                <section>
+                    <h3>Форум</h3>
+                    <!-- Добавьте форум для обсуждения, профилей участников и форму для создания новых тем и сообщений -->
+                </section>
+            </section>
+        </div>
+
+        <!-- Carousel for Projects and Initiatives -->
+        <div class="carousel-item projects" tabindex="0">
+            <section>
+                <h2>Проекты и инициативы</h2>
+                <p>Заголовок и описание раздела.</p>
+                <section>
+                    <h3>Текущие проекты</h3>
+                    <!-- Добавьте список текущих проектов с краткими описаниями и изображениями -->
+                </section>
+            </section>
+        </div>
+
+        <!-- Add other sections as needed -->
+
     </section>
-
-    <section class="featured-projects">
-      <h2>Projets en vedette</h2>
-      {% for project in featured_projects %}
-        <article>
-          <h3>{{ project.getName() }}</h3>
-          <p>{{ project.getDescription()|raw }}</p>
-          <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a>
-        </article>
-      {% endfor %}
-    </section>
-
-    <section class="utilization">
-      <h2>Утилизация и сортировка</h2>
-      <p>Заголовок и описание раздела.</p>
-
-      <section>
-        <h3>Инструкции по сортировке мусора</h3>
-        <!-- Добавьте секции с инструкциями, графическими иллюстрациями и анимациями -->
-      </section>
-
-      <section>
-        <h3>Полезные советы</h3>
-        <!-- Добавьте блок с полезными советами -->
-      </section>
-    </section>
-
-    <section class="community">
-      <h2>Сообщество и форум</h2>
-      <p>Заголовок и описание раздела.</p>
-
-      <section>
-        <h3>Форум</h3>
-        <!-- Добавьте форум для обсуждения, профили участников и форму для создания новых тем и сообщений -->
-      </section>
-    </section>
-
-    <!-- Добавьте раздел "Проекты и инициативы" -->
-    <section class="projects">
-      <h2>Проекты и инициативы</h2>
-      <p>Заголовок и описание раздела.</p>
-
-      <section>
-        <h3>Текущие проекты</h3>
-        <!-- Добавьте список текущих проектов с краткими описаниями и изображениями -->
-      </section>
-    </section>
-
-    <!-- Аналогично добавьте разделы для "Блога и новостей", "Контактов и подписки", "Профиля пользователя" и "Страницы проекта" -->
-    
+ </div>
+ </div>
   </body>
 {% endblock %}

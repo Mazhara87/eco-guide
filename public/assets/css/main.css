@@ -1,3 +1,78 @@
+/* Стиль для футера */
+footer {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  position: relative; /* Изменено на relative */
+   margin-top: auto; /*Новое свойство */
+  z-index: 1000;
+  bottom: 0;
+  height: 30px;
+  
+}
+
+/* Отступ для контентной области на всех страницах, кроме главной */
+body:not(.home) {
+  margin-bottom: 80px;
+} 
+body {
+  margin-bottom: 80px;
+}
+
+/* Стили для Хедера и Футера */
+header,
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeInDown 0.5s ease;
+}
+
+/* Анимация для Хедера и Футера */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для ссылок в Хедере и Футере */
+nav a,
+.footer-content a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover,
+.footer-content a:hover {
+  color: #ffd700;
+}
+
+/* Стиль для картинки на фоне страницы */
+body {
+  background-image: url('../images/RSE-3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* Стили для Хедера и Футера */
 header {
     background-color: #333;
@@ -32,36 +107,25 @@ nav a:hover {
 }
 
 .logo {
-    font-size: 1.5em;
+    font-size: 1.5em; 
 }
 
-/* Стиль для футера */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-}
-
-/* Отступ для контентной области на всех страницах, кроме главной */
-body:not(.home) {
-    margin-bottom: 80px;
-}
 
 /* Стили для контентной области */
 .main-content {
-    min-height: calc(100vh - 80px); /* Учитываем высоту футера */
-    padding-bottom: 80px; /* Выберите такой же отступ, как у body */
-}
+    min-height: calc(100vh - 80px); /*Учитываем высоту футера */
+     padding-bottom: 80px; /*Выберите такой же отступ, как у body */
+     box-sizing: border-box; 
+    flex: 1;
+    
+} 
 
 .footer-content {
+    
     display: flex;
     justify-content: space-around;
     align-items: flex-end; /* Изменено на flex-end */
-}
+} 
 
 .contact-info,
 .social-links,
@@ -93,11 +157,11 @@ body:not(.home) {
     color: #ffd700; /* измените цвет при наведении на ссылку */
 }
 
-.subscribe-form input,
+/* .subscribe-form input,
 .subscribe-form button {
     width: 100%;
     margin: 5px 0;
-}
+} */
 
 .subscribe-form button {
     background-color: #333;
@@ -185,3 +249,246 @@ body:not(.home) {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+
+img.logo1{
+    width: 40px;
+    height: 40px;
+}
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.container {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  padding: 20px;
+}
+.container1 {
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  background-image: url('../images/banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50vh;
+  justify-content: center;
+}
+
+
+/* Header Styles */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffd700;
+}
+
+.logo {
+  font-size: 1.5em;
+}
+
+/* Hero Banner Styles */
+/* Обновленные стили для баннера */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 30vh; /* Установите желаемую высоту баннера */
+  overflow: hidden;
+}
+
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+}
+
+.banner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+}
+
+.banner-content h1 {
+  margin: 0;
+  font-size: 2em;
+}
+/* Стили для текста внутри баннера */
+.hero-banner h1 {
+  /* font-size: 2em;
+  margin-bottom: 20px; */
+  justify-content: center;
+}
+
+/* Пример стилей для кнопки внутри баннера */
+.hero-banner a.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.hero-banner a.button:hover {
+  background-color: #0056b3;
+}
+
+/* Section Styles */
+section {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Article Styles */
+article {
+  margin-bottom: 20px;
+}
+
+/* Heading Styles */
+h2 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #333;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* Paragraph Styles */
+p {
+  line-height: 1.6;
+}
+
+/* Link Styles */
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/* Общие стили для всех блоков */
+.home-section {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Анимация при наведении */
+.home-section:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для каждого блока */
+.latest-news {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.featured-projects {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.utilization {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.community {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.projects {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Добавьте другие блоки по мере необходимости */
+
+/* Анимация для каждого блока */
+.latest-news,
+.featured-projects,
+.utilization,
+.community,
+.projects {
+  animation: fadeInUp 1s ease;
+}
+
+/* Анимация появления вверху */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Дополнительные стили для разделов (замените их на ваши стили) */
+.latest-news h2,
+.featured-projects h2,
+.utilization h2,
+.community h2,
+.projects h2 {
+  /* Замените этот блок стилями текста */
+}
+
+/* При необходимости добавьте другие стили для текста, ссылок и т. д. */
+
+
