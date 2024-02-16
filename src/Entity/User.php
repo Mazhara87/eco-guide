@@ -10,8 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Utilisateur avec ce mail existe deja ')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -43,7 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProjectSupporter::class)]
     private Collection $projectSupporters;
 
-   
+   /**
+ * @ORM\OneToMany(targetEntity=ForumComment::class, mappedBy="user")
+ */
+private $comments;
+
 
     // DEFAULT VALUES
     public function __construct()
@@ -51,6 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->forumPosts = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->projectSupporters = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     // WHEN YOU WANT TO DISPLAY AN OBJECT
@@ -113,12 +120,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+
+    // public function setPassword(string $password): static
+    // {
+    //     // Переместите логику шифрования пароля в сервисный слой, но для простоты добавлено сюда
+    //     $this->password = $password;
+
+    //     return $this;
+    // }
+
+      /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+   public function setPassword(string $password): static
     {
-        $this->password = $password;
+        // Убедимся, что пароль не пустой
+        if (!empty($password)) {
+            // Хешируем пароль с использованием Bcrypt
+            $options = ['cost' => 13];
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
+
+            // Устанавливаем хешированный пароль
+            $this->password = $hashedPassword;
+        }
 
         return $this;
     }
+
 
     /**
      * @see UserInterface

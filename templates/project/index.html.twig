@@ -2,39 +2,134 @@
 
 {% block title %}Projets et Initiatives{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
+    <style>
+        h1 {
+            text-align: center;
+            height: 50%;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 59px;
+        }
+
+        .item {
+            width: calc(40% - 30px);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card {
+            height: 100%;
+        }
+
+        .card.item-card.card-block {
+            height: 100%;
+        }
+
+        .item h5 {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .project-description {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .expanded {
+            overflow: visible;
+            white-space: normal;
+        }
+
+        .overflow-scroll {
+            overflow-y: auto;
+            max-height: 150px; /* Задайте желаемую максимальную высоту для прокрутки */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <h1>Projets et Initiatives</h1>
+    <div class="container mt-2">
+        {% for project in projects %}
+            <div class="item">
+                <div class="card item-card card-block">
+                    <div class="card-img-top">
+                        <img src="{{ asset('path/to/your/project/image.jpg') }}" alt="Project Image">
+                    </div>
+                    <h5 class="item-card-title mt-3 mb-3">{{ project.getName }}</h5>
+                    <p class="card-text project-description"
+                       data-full-description="{{ project.getDescription | raw }}"
+                       data-short-description="{{ project.getDescription | raw | slice(0, 100) }}{% if project.getDescription | length > 100 %}...{% endif %}">
+                        {{ project.getDescription | raw | slice(0, 100) }}{% if project.getDescription | length > 100 %}...{% endif %}
+                    </p>
+                    <form class="like-form" data-project-id="{{ project.id }}">
+                        <button type="submit">Like</button>
+                    </form>
+                    <span id="like-count-{{ project.id }}">{{ project.projectSupporters.count() }}</span> Likes
+                    <div class="project-content" style="display: none;">
+                        {{ project.getDescription | raw }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-    <section>
-        <h2>Projets Actuels</h2>
-        <ul>
-            <li>
-                <h3>Projet "Ville Verte"</h3>
-                <p>Description du projet "Ville Verte". Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                <a href="#">En savoir plus</a>
-            </li>
-            <li>
-                <h3>Initiative "Eaux Propres"</h3>
-                <p>Description de l'initiative "Eaux Propres". Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                <a href="#">En savoir plus</a>
-            </li>
-        </ul>
-    </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const likeForms = document.querySelectorAll('.like-form');
 
-    <section>
-        <h2>Projets Terminés</h2>
-        <ul>
-            <li>
-                <h3>Projet "Marathon Écologique"</h3>
-                <p>Description du projet "Marathon Écologique". Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                <a href="#">En savoir plus</a>
-            </li>
-            <li>
-                <h3>Initiative "Changeons le Monde Ensemble"</h3>
-                <p>Description de l'initiative "Changeons le Monde Ensemble". Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                <a href="#">En savoir plus</a>
-            </li>
-        </ul>
-    </section>
+        likeForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
 
+                const projectId = form.dataset.projectId;
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/like/${projectId}`,
+                    dataType: 'json',
+                success: function (response) {
+    console.log('Ответ сервера:', response);
+
+    if (response.likeCount !== undefined) {
+        console.log('Лайк добавлен');
+        console.log('Количество лайков: ' + response.likeCount);
+        console.log('Информация о проекте:', response.project);
+
+        const likeCountElement = document.getElementById(`like-count-${projectId}`);
+        if (likeCountElement) {
+            likeCountElement.textContent = response.likeCount;
+        }
+
+        alert('Votre soutien est ajouté à ce projet !');
+    } else {
+        console.error('Ошибка:', response.message);
+
+        if (response.message.includes('Лайк уже добавлен')) {
+            alert('Лайк уже добавлен à ce projet !');
+        } else {
+            alert('Ошибка: ' + response.message);
+        }
+    }
+},
+                    error: function (xhr, status, error) {
+                        // Ошибка при отправке запроса
+                        console.error('Ошибка:', xhr.responseText);
+                        alert('Произошла ошибка при добавлении лайка');
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

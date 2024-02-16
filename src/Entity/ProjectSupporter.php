@@ -13,15 +13,26 @@ class ProjectSupporter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'projectSupporters')]
+    // #[ORM\ManyToOne(inversedBy: 'projectSupporters')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // // private ?User $user = null;
+    // private $user;
+
+    // #[ORM\ManyToOne(inversedBy: 'projectSupporters', cascade: ['persist'])]
+    // #[ORM\JoinColumn(nullable: false)]
+    // // private ?Project $project = null;
+    // private $project;
+
+    #[ORM\ManyToOne(targetEntity: "App\Entity\User", cascade: ["persist"])] // Добавлен атрибут cascade
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private $user;
 
-    #[ORM\ManyToOne(inversedBy: 'projectSupporter')]
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Project", cascade: ["persist"])] // Добавлен атрибут cascade
     #[ORM\JoinColumn(nullable: false)]
-    private ?Project $project = null;
+    private $project;
 
-
+   // Геттеры и сеттеры
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -50,5 +61,4 @@ class ProjectSupporter
 
         return $this;
     }
-
 }

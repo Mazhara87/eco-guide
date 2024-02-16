@@ -1,28 +1,36 @@
+{# templates/community/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Communauté et Forum{% endblock %}
 
 {% block body %}
-<body class="home">
-    <div class="container">
-    
-        <h1>Bienvenue dans notre communauté!</h1>
-        <p>Ce forum est l'endroit idéal pour discuter des questions environnementales, partager des idées et participer à des initiatives éco-responsables.</p>
+    <body class="home">
+        <div class="container">
+            <h1>Bienvenue dans notre communauté!</h1>
+            <p>Ce forum est l'endroit idéal pour discuter des questions environnementales, partager des idées et participer à des initiatives éco-responsables.</p>
 
-        <h2>Dernières Discussions</h2>
-        <ul>
-            <li><a href="#">Comment réduire les déchets plastiques?</a></li>
-            <li><a href="#">Idées pour le recyclage créatif à la maison</a></li>
-            <li><a href="#">Partagez vos astuces pour économiser l'énergie</a></li>
-        </ul>
+            <h2>Dernières Discussions</h2>
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <a href="{{ path('app_forum_show_post_details', {'id': post.id}) }}">
+                            {{ post.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
 
-        <h2>Prochains Événements</h2>
-        <ul>
-            <li><a href="#">Nettoyage communautaire le samedi 15 mars</a></li>
-            <li><a href="#">Atelier de compostage le jeudi 20 mars</a></li>
-        </ul>
+            <h2>Prochains Événements</h2>
+            <ul>
+                <li><a href="#">Nettoyage communautaire le samedi 15 mars</a></li>
+                <li><a href="#">Atelier de compostage le jeudi 20 mars</a></li>
+            </ul>
 
-        <a href="#" class="btn btn-primary">Créer une Nouvelle Discussion</a>
-    </div>
-     </body>
+ {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+            <a href="{{ path('app_forum_create_post') }}" class="btn btn-primary">Créer une Nouvelle Discussion</a>
+             {% endif %}
+        </div>
+    </body>
 {% endblock %}

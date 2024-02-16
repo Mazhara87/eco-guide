@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Post{% endblock %}
+
+{% block body %}
+    <div class="container">
+    {# Добавьте следующие строки для отладки #}
+
+        <h1>{{ post.id }} {{ post.title }}</h1>
+        <p>{{ post.text | raw }}</p>
+
+   {# Добавим комментарии к посту #}
+<h2>Commentaires</h2>
+<div>
+   
+</div>
+<script>
+        // JavaScript to toggle visibility of article content
+        document.addEventListener('DOMContentLoaded', function() {
+    const articles = document.querySelectorAll('.blog-article');
+
+    articles.forEach(article => {
+        const title = article.querySelector('.article-title');
+        const content = article.querySelector('.article-content');
+
+        title.addEventListener('click', function() {
+            // Закрываем предыдущую статью, если она открыта
+            const openArticle = document.querySelector('.blog-article.active');
+            if (openArticle && openArticle !== article) {
+                const openContent = openArticle.querySelector('.article-content');
+                openContent.style.display = 'none';
+                openArticle.classList.remove('active');
+            }
+
+            // Открываем или закрываем текущую статью
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            article.classList.toggle('active');
+        });
+    });
+});
+
+    </script>
+ {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+           {# Your Twig template #}
+       <pre>
+             {{ dump(commentForm) }}
+{{ dump(commentForm.vars.data) }}
+       </pre>    
+
+ {{ form_start(commentForm) }}
+            {{ form_row(commentForm.text, {'attr': {'class': 'comment-content'}}) }}
+                    {{ form_row(commentForm.user) }}
+{{ form_row(commentForm.post) }}
+            {{ form_row(commentForm._token) }}
+            <button type="submit">Submit</button>
+        {{ form_end(commentForm) }}
+
+        {% endif %}
+
+    </div>
+{% endblock %}

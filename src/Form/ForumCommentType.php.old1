@@ -1,0 +1,50 @@
+<?php
+namespace App\Form;
+
+use App\Entity\ForumComment;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use App\Entity\Comment;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+class ForumCommentType extends AbstractType
+{
+    // public function buildForm(FormBuilderInterface $builder, array $options): void
+    // {
+    //     $builder
+    //         ->add('content')
+    //         // Hide the forumPost field
+    //         ->add('forumPost', null, ['mapped' => false, 'attr' => ['style' => 'display:none;']])
+    //     ;
+
+    //     // Add an event listener to set the value
+    //     $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+    //         $form = $event->getForm();
+    //         $data = $event->getData();
+
+    //         // Set the value of the hidden field
+    //         $form->get('forumPost')->setData($options['forumPostId']);
+    //     });
+    // }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('content', TextareaType::class, [
+                'label' => 'Your Comment',
+                'required' => true,  // Если поле обязательное
+            ])
+        ;
+    }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => ForumComment::class,
+            'forumPostId' => null,
+        ]);
+    }
+}
+?>

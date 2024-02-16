@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ForumPost;
+use App\Form\CommentType;
+use App\Entity\ForumComment;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+
+class CommunityController extends AbstractController
+{
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    #[Route('/communaute', name: 'app_community')]
+    public function index(): Response
+    {
+        $posts = $this->entityManager->getRepository(ForumPost::class)->findAll();
+
+        return $this->render('community/index.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
+
+   // ...
+
+/**
+ * @Route("/create-comment/{id}", name="app_forum_create_comment")
+ */
+public function createComment(Request $request, ForumPost $post): Response
+{
+    $comment = new ForumComment();
+    $comment->setUser($this->getUser());
+    $comment->setCreatedAt(new \DateTimeImmutable());
+
+    $form = $this->createForm(CommentType::class, $comment);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+        // Внесем изменения в сохранение комментария
+        $comment->setPost($post); // Установим связь с постом перед сохранением
+        $post->addComment($comment);
+
+
+    // Проверим валидность формы
+    dump($form->getErrors(true, true)); // Добавим этот код
+
+    $this->entityManager->persist($comment);
+    $this->entityManager->flush();
+
+
+ // Добавим дополнительные проверки
+ dump($comment->getText()); // Проверим текст комментария
+ dump($comment->getUser()); // Проверим пользователя
+
+ $this->entityManager->persist($comment);
+ $this->entityManager->flush();    // Сбросим форму после успешного сохранения
+ 
+        $form = $this->createForm(CommentType::class, new ForumComment());
+
+        // Возвращаем на страницу с подробностями поста
+        return $this->redirectToRoute('app_forum_show_post_details', ['id' => $post->getId()]);
+    }
+
+    return $this->render('community/show_post_details.html.twig', [
+        'post' => $post,
+        'comments' => $post->getComments(),
+        'form' => $form->createView(),
+    ]);
+}
+
+// ...
+
+
+/**
+ * @Route("/show-post/{id}", name="app_forum_show_post_details")
+ */
+public function showPostDetails(ForumPost $post): Response
+{
+    $comments = $post->getComments();
+
+    $comment = new ForumComment();
+    $form = $this->createForm(CommentType::class, $comment);
+
+    return $this->render('community/show_post_details.html.twig', [
+        'post' => $post,
+        'comments' => $comments,
+        'form' => $form->createView(),
+    ]);
+}
+
+}

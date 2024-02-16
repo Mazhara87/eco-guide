@@ -1,0 +1,15 @@
+{% block title %}Détails du Commentaire{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {# Добавьте следующие строки для отладки #}
+        {% if comment is defined %}
+            <h1>Commentaire ID: {{ comment.id }}</h1>
+            <p>{{ comment.text }}</p>
+            <p>Post ID: {{ comment.post.id }}</p>
+            <p>User ID: {{ comment.user.id }}</p>
+        {% else %}
+            <p>Comment not found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

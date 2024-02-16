@@ -1,18 +1,72 @@
 <!-- templates/partials/header.html.twig -->
+
 <header>
     <div class="logo">
         <a href="{{ path('app_home') }}">
             <img src="{{ asset('assets/images/logo.jpg') }}" class="logo1" alt="EcoGuide Logo">
         </a>
+        <style>
+        .dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+        color: #fff;
+    background-color: #c6e3a3;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+        </style>
     </div>
     <nav>
         <ul>
             <li><a href="{{ path('app_home') }}">Главная</a></li>
-            <li><a href="{{ path('app_utilization') }}">Утилизация и сортировка</a></li>
+            <li><a href="{{ path('app_utilization') }}">Tri et Recyclage</a></li>
             <li><a href="{{ path('app_community') }}">Сообщество и форум</a></li>
             <li><a href="{{ path('app_projects') }}">Проекты и инициативы</a></li>
-            <li><a href="{{ path('app_blog') }}">Блог и новости</a></li>
-            <li><a href="{{ path('app_contact') }}">Контакты и подписка</a></li>
+            <li><a href="{{ path('app_blog') }}">Blog et Actualités</a></li>
+            <li><a href="{{ path('app_contact') }}">Contact</a></li>
+             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Mon compte <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('app_change_info') }}">Changer</a></li>
+                    <li><a href="{{ path('app_logout') }}">Se deconnecter</a></li>
+                </ul>
+            </li>
+        {% else %}
+            <!-- Ваш код для неаутентифицированных пользователей -->
+              <li><a href="{{ path('app_login') }}">Connexion</a></li>        
+        {% endif %}
         </ul>
     </nav>
+
+    <!-- Подключите jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Показывать/скрывать выпадающее меню при наведении/убирании курсора
+        $('.dropdown').hover(
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(200);
+            },
+            function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(200);
+            }
+        );
+    });
+</script>
 </header>

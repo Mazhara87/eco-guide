@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Post{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% if post %}
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text | raw }}</p>
+
+            {# Код для отображения комментариев #}
+            {% if post.comments is not empty %}
+                <h2>Commentaires</h2>
+                <ul>
+                    {% for comment in post.comments %}
+                        <li>{{ comment.text | raw }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% else %}
+            <p>Le post n'existe pas.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{# templates/messenger/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Мессенджер</h1>
+
+    {% for message in messages %}
+        <div>
+            <p>{{ message.body }}</p>
+            <small>Отправлено: {{ message.createdAt|date('Y-m-d H:i:s') }}</small>
+            <hr>
+        </div>
+    {% endfor %}
+
+    {# Добавьте разметку для отображения других полей сообщения, если необходимо #}
+
+    {# Добавьте ссылку на страницу создания сообщения #}
+    <a href="{{ path('messenger_create') }}">Создать сообщение</a>
+{% endblock %}

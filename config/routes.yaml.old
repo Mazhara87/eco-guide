@@ -1,0 +1,15 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+app_forum_show_post_details:
+    path: '/show-post/{id}'
+    controller: 'App\Controller\CommunityController::showPostDetails'
+    methods: ['GET', 'POST']
+
+app_forum_create_post:
+    path: '/create-post'
+    controller: 'App\Controller\CommunityController::createPost'
+    methods: ['GET', 'POST']

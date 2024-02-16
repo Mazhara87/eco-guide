@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Creer du Post{% endblock %}
+
+{% block body %}
+  <h1>Create a Post</h1>
+
+    {# Render the form start #}
+    {{ form_start(form) }}
+
+    {# Render form fields and errors #}
+    {{ form_row(form.title) }}
+    {{ form_errors(form.title) }}
+
+    {{ form_row(form.text) }}
+    {{ form_errors(form.text) }}
+
+    {{ form_row(form.summary) }}
+    {{ form_errors(form.summary) }}
+
+    {# Render the submit button #}
+    {{ form_row(form.submit) }}
+
+    {# Render the form end #}
+    {{ form_end(form) }}
+
+{% endblock %}

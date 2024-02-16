@@ -3,3 +3,60 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+app_forum_show_post_details:
+    path: '/show-post/{id}'
+    controller: 'App\Controller\CommunityController::showPostDetails'
+    methods: ['GET', 'POST']
+
+app_forum_create_post:
+    path: '/create-post'
+    controller: 'App\Controller\CommunityController::createPost'
+    methods: ['GET', 'POST']
+
+registration:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+    methods: ['GET', 'POST']
+
+add_post:
+    path: /add/post
+    controller: App\Controller\PostController::addPost
+    methods: ['GET', 'POST']
+
+add_post_to_user:
+    path: /add/post/{userId}
+    controller: App\Controller\PostController::addPostToUser
+    methods: ['GET', 'POST']
+
+app_logout:
+    path: '/logout'
+    controller: 'App\Controller\LogoutController::logout'
+    methods: ['GET', 'POST']
+
+app_change_info:
+    path: /change-info
+    controller: App\Controller\ChangeInfoController::changeInfo
+    methods: ['GET', 'POST']
+
+app_forum_show_comment_details:
+    path: /show-comment/{id}
+    controller: App\Controller\CommunityController::showCommentDetails
+    requirements:
+        id: \d+
+    methods:  ['GET', 'POST']
+    
+messenger_index:
+    path: /messenger
+    controller: 'App\Controller\MessengerController::index'
+    methods: ['GET', 'POST']
+
+messenger_create:
+    path: /messenger/create
+    controller: 'App\Controller\MessengerController::create'
+    methods: ['GET', 'POST']
+
+like_project:
+    path: /like/{projectId}
+    controller: App\Controller\LikeController::likeProject
+    methods: ['GET', 'POST']

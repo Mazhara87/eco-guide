@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Contacts et Abonnement{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+      /* Стиль для картинки на фоне страницы */
+body {
+  background-image: url('../assets/images/ecologie-solutions.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.container {
 
+    margin: 0px 47px;
+    padding: 5px;
+}
+li {
+    list-style-type: none;
+}
+    </style>
+{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container" style="text-align: center;">
         <h1>Contactez-nous</h1>
-        <p>Pour toute question ou information, n'hésitez pas à nous contacter:</p>
+        <p style="font-size:26px;font-family: 'Arial', sans-serif;">Pour toute question ou information, n'hésitez pas à nous contacter:</p>
 
         <ul>
-            <li>Email: <a href="mailto:info@ecoguide.com">info@ecoguide.com</a></li>
+            <li >Email: <a href="mailto:info@ecoguide.com">info@ecoguide.com</a></li>
             <li>Téléphone: +33 123 456 789</li>
         </ul>
-
-        <h2>Abonnez-vous à notre newsletter</h2>
-        <p>Recevez les dernières actualités et mises à jour directement dans votre boîte de réception.</p>
-
+<hr>
         {# Вставьте код формы подписки, если у вас есть форма #}
     </div>
 {% endblock %}
