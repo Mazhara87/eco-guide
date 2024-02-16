@@ -5,86 +5,52 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
-    <style>
-        h1 {
-            text-align: center;
-            height: 50%;
-        }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding-top: 59px;
-        }
-
-        .item {
-            width: calc(40% - 30px);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .card {
-            height: 100%;
-        }
-
-        .card.item-card.card-block {
-            height: 100%;
-        }
-
-        .item h5 {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .project-description {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .expanded {
-            overflow: visible;
-            white-space: normal;
-        }
-
-        .overflow-scroll {
-            overflow-y: auto;
-            max-height: 150px; /* Задайте желаемую максимальную высоту для прокрутки */
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
     <h1>Projets et Initiatives</h1>
     <div class="container mt-2">
-        {% for project in projects %}
-            <div class="item">
-                <div class="card item-card card-block">
-                    <div class="card-img-top">
-                        <img src="{{ asset('path/to/your/project/image.jpg') }}" alt="Project Image">
-                    </div>
-                    <h5 class="item-card-title mt-3 mb-3">{{ project.getName }}</h5>
-                    <p class="card-text project-description"
-                       data-full-description="{{ project.getDescription | raw }}"
-                       data-short-description="{{ project.getDescription | raw | slice(0, 100) }}{% if project.getDescription | length > 100 %}...{% endif %}">
-                        {{ project.getDescription | raw | slice(0, 100) }}{% if project.getDescription | length > 100 %}...{% endif %}
-                    </p>
-                    <form class="like-form" data-project-id="{{ project.id }}">
-                        <button type="submit">Like</button>
+       {% for project in projects %}
+    <div class="item">
+        <div class="scene scene--card">
+            <div class="card">
+                <div class="card__face card__face--front">
+                    <p class="item-card-title mt-3 mb-3">{{ project.getName }}</p>
+                    <br>
+                     <span id="like-count-{{ project.id }}" class="like-count"> {{ project.projectSupporters.count() }} Likes
+                    
+                     </span> 
+<form class="like-form" data-project-id="{{ project.id }}">
+                        <button type="submit" class="like-button">Like</button>
                     </form>
-                    <span id="like-count-{{ project.id }}">{{ project.projectSupporters.count() }}</span> Likes
-                    <div class="project-content" style="display: none;">
-                        {{ project.getDescription | raw }}
-                    </div>
+                    <img src="{{ asset('assets/images/images.jpg') }}" alt="Project Image">
+                </div>
+
+
+
+                <div class="card__face card__face--back">
+                    <p class="project-description">
+                       {{ project.getDescription | raw }}
+                    </p>                
+    
+
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
     </div>
 
 <script>
+var cards = document.querySelectorAll('.card');
+
+[...cards].forEach((card)=>{
+  card.addEventListener( 'click', function() {
+    card.classList.toggle('is-flipped');
+  });
+});
     document.addEventListener('DOMContentLoaded', function () {
         const likeForms = document.querySelectorAll('.like-form');
 
@@ -116,7 +82,7 @@
         console.error('Ошибка:', response.message);
 
         if (response.message.includes('Лайк уже добавлен')) {
-            alert('Лайк уже добавлен à ce projet !');
+            alert('Votre soutien est ajouté à ce projet !');
         } else {
             alert('Ошибка: ' + response.message);
         }
@@ -125,7 +91,7 @@
                     error: function (xhr, status, error) {
                         // Ошибка при отправке запроса
                         console.error('Ошибка:', xhr.responseText);
-                        alert('Произошла ошибка при добавлении лайка');
+                        alert('Erreur lors d\'ajout du soutien');
                     }
                 });
             });

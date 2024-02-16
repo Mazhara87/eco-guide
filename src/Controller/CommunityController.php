@@ -38,8 +38,7 @@ class CommunityController extends AbstractController
 /**
  * @Route("/create-comment/{id}", name="app_forum_create_comment")
  */
-
- public function createComment(Request $request, ForumPost $post): Response
+public function createComment(Request $request, ForumPost $post): Response
 {
     $comment = new ForumComment();
     $user = $this->getUser();
@@ -59,6 +58,7 @@ class CommunityController extends AbstractController
             $comment->setUserId($user->getId());
             $comment->setPostId($post->getId());
 
+            $entityManager = $this->entityManager; // Добавлено
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -117,7 +117,7 @@ public function showPostDetails(ForumPost $post, Request $request): Response
 
     $comment = new ForumComment();
     $comment->setUser($this->getUser());
-    $comment->setCreatedAt(new \DateTimeImmutable()); // Установите дату создания
+    $comment->setCreatedAt(new \DateTimeImmutable());
 
     $form = $this->createForm(ForumCommentType::class, $comment, [
         'user' => $this->getUser(),
@@ -127,10 +127,14 @@ public function showPostDetails(ForumPost $post, Request $request): Response
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager = $this->entityManager;
         $comment->setPost($post); // Устанавливаем post перед сохранением
+
+        $entityManager = $this->entityManager;
         $entityManager->persist($comment);
         $entityManager->flush();
+
+        // Обновляем комментарии после добавления нового комментария
+        $comments = $post->getComments();
     }
 
     return $this->render('community/show_post_details.html.twig', [

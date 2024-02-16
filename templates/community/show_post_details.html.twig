@@ -11,6 +11,15 @@
 
    {# Добавим комментарии к посту #}
 <h2>Commentaires</h2>
+
+ <div id="comments-container">
+            {% for comment in comments %}
+                <div class="comment">
+                    <p>{{ comment.text | raw }}</p>
+                    <p>By: {{ comment.user.username }}, {{ comment.createdAt | date('d/m/Y H:i') }}</p>
+                </div>
+            {% endfor %}
+        </div>
 <div>
    
 </div>
