@@ -90,19 +90,20 @@ flex-direction: column
             </section>
         </div>
 
-        <!-- Carousel for Featured Projects -->
-        <div class="carousel-item featured-projects" tabindex="0">
-            <section>
-                <h2>Projets en vedette</h2>
-                {% for project in featured_projects %}
-                    <article>
-                        <h3>{{ project.getName() }}</h3>
-                        <p>{{ project.getDescription()|raw }}</p>
-                        <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a>
-                    </article>
-                {% endfor %}
-            </section>
-        </div>
+ <!-- Carousel for Featured Projects -->
+<div class="carousel-item featured-projects" tabindex="0">
+    <section>
+        <h2>Projets en vedette</h2>
+        {% for project in featured_projects %}
+            <article>
+                <h3>{{ project.getName() }}</h3>
+                <!-- Добавлен блок для отображения только названия проекта -->
+                <p>{{ project.getDescription()|raw }}</p>
+                <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a>
+            </article>
+        {% endfor %}
+    </section>
+</div>
 
         <!-- Carousel for Utilization and Sorting -->
         <div class="carousel-item utilization" tabindex="0">

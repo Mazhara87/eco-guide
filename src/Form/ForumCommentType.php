@@ -21,7 +21,7 @@ class ForumCommentType extends AbstractType
     {
         $builder
             ->add('text', TextareaType::class, [
-                'label' => 'Your Comment',
+                'label' => 'Votre Commentaire',
             ])
             ->add('user', HiddenType::class, [
                 'data' => $options['user'] ? $options['user']->getId() : null,

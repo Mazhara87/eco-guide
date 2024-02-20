@@ -1,0 +1,29 @@
+{# templates/community/forum_details.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Post{% endblock %}
+
+{% block body %}
+    <div class="container">
+       {# {% if post is defined %} #}
+{% if post is defined %} <!-- Изменено условие проверки -->
+    <h1>{{ post.id }} {{ post.title }}</h1>
+    <p>{{ post.text | raw }}</p>
+    <h2>Commentaires</h2>
+    <div id="comments-container">
+        {% for comment in comments %}
+            <div class="comment">
+                <p>{{ comment.text | raw }}</p>
+                <p>By: {{ comment.user.username }}, {{ comment.createdAt | date('d/m/Y H:i') }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Post not found</p>
+{% endif %}
+        </div>
+
+        {# ... остальной код ... #}
+    </div>
+{% endblock %}

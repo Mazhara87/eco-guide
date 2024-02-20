@@ -2,69 +2,134 @@
 
 {% block title %}Détails du Post{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        #comments-container {
+            margin-top: 10px;
+        }
+
+        .comment {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-info {
+            flex: 1;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .comment-content {
+         flex: 3;
+        font-size: 16px;
+        margin-left: 10px;
+        word-wrap: break-word;
+      background-color: #f0f0f030; /* Задаем фон для поля ввода комментария */
+        border-radius: 5px; /* Закругляем углы */
+        padding: 8px; /* Добавляем отступы внутри блока */
+        }
+
+        .comment p {
+            margin: 0;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .comment-content-input {
+            width: 98%;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+           background-color: #f0f0f030;
+        }
+
+        .comment-submit-btn {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .comment-submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <div class="container">
-    {# Добавьте следующие строки для отладки #}
-
         <h1>{{ post.id }} {{ post.title }}</h1>
         <p>{{ post.text | raw }}</p>
 
-   {# Добавим комментарии к посту #}
-<h2>Commentaires</h2>
+        <h2>Commentaires</h2>
 
- <div id="comments-container">
-            {% for comment in comments %}
+        <div id="comments-container">
+            {% for comment in post.comments %}
                 <div class="comment">
-                    <p>{{ comment.text | raw }}</p>
-                    <p>By: {{ comment.user.username }}, {{ comment.createdAt | date('d/m/Y H:i') }}</p>
+                    <div class="comment-info">
+                        <p>
+                            <strong>{{ comment.user.name }}</strong> - {{ comment.createdAt | date }}
+                        </p>
+                    </div>
+                    <div class="comment-content">
+                        <p>{{ comment.text }}</p>
+                    </div>
                 </div>
             {% endfor %}
         </div>
-<div>
-   
-</div>
-<script>
-        // JavaScript to toggle visibility of article content
-        document.addEventListener('DOMContentLoaded', function() {
-    const articles = document.querySelectorAll('.blog-article');
 
-    articles.forEach(article => {
-        const title = article.querySelector('.article-title');
-        const content = article.querySelector('.article-content');
+        <div class="comment-form">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ form_start(commentForm) }}
+                    {{ form_row(commentForm.text, {'attr': {'class': 'comment-content-input'}}) }}
+                    {{ form_row(commentForm._token) }}
+                    <button type="submit" class="comment-submit-btn">Ajouter</button>
+                {{ form_end(commentForm) }}
+            {% endif %}
+        </div>
+    </div>
+    <script>
+ document.addEventListener('DOMContentLoaded', function() {
+        const commentForm = document.querySelector('#commentForm');
 
-        title.addEventListener('click', function() {
-            // Закрываем предыдущую статью, если она открыта
-            const openArticle = document.querySelector('.blog-article.active');
-            if (openArticle && openArticle !== article) {
-                const openContent = openArticle.querySelector('.article-content');
-                openContent.style.display = 'none';
-                openArticle.classList.remove('active');
-            }
-
-            // Открываем или закрываем текущую статью
-            content.style.display = content.style.display === 'none' ? 'block' : 'none';
-            article.classList.toggle('active');
+        commentForm.addEventListener('submit', function() {
+            const commentContent = document.querySelector('#forum_comment_text');
+            commentContent.value = ''; // Очистка содержимого поля
         });
     });
-});
-
-    </script>
- {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-           {# Your Twig template #}
-       <pre>
-             {{ dump(commentForm) }}
-{{ dump(commentForm.vars.data) }}
-       </pre>    
-
- {{ form_start(commentForm) }}
-            {{ form_row(commentForm.text, {'attr': {'class': 'comment-content'}}) }}
-                    {{ form_row(commentForm.user) }}
-{{ form_row(commentForm.post) }}
-            {{ form_row(commentForm._token) }}
-            <button type="submit">Submit</button>
-        {{ form_end(commentForm) }}
-
-        {% endif %}
-
-    </div>
+</script>
 {% endblock %}

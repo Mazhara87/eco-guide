@@ -25,17 +25,14 @@ class ForumComment
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+    #[ORM\ManyToOne(inversedBy: 'forumPosts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ForumPost $post = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ForumPost::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $post;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
 
     /**

@@ -144,20 +144,19 @@ public function showPostDetails(ForumPost $post, Request $request): Response
     ]);
 }
 
-/**
- * @Route("/show-post{id}", name="app_forum_show_comment_details")
- */
-/*public function showCommentDetails(ForumComment $comment,ForumPost $post, Request $request): Response
+
+#[Route('/forum-details/{id}', name: 'forum_details')]
+public function forumDetails(ForumPost $post = null): Response
 {
-    $post = $comment->getPost();
+    if (!$post) {
+        throw $this->createNotFoundException('Post not found');
+    }
+
     $comments = $post->getComments();
 
-    return $this->render('community/show_post_details.html.twig', [
-        'post' => $post,
+    return $this->render('community/forum_details.html.twig', [
+        'post' => $post,  // Добавлена проверка и передача post в шаблон
         'comments' => $comments,
-        'commentForm' => null, // Мы не будем передавать форму в этом методе
     ]);
-}*/
-
-
+}
 }
