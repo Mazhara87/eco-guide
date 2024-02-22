@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Utilisateur avec ce mail existe deja ')]
@@ -30,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -132,22 +133,31 @@ private $comments;
       /**
      * @see PasswordAuthenticatedUserInterface
      */
-   public function setPassword(string $password): static
+//    public function setPassword(string $password): static
+//     {
+//         // Убедимся, что пароль не пустой
+//         if (!empty($password)) {
+//             // Хешируем пароль с использованием Bcrypt
+//             $options = ['cost' => 10];
+//             $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
+
+//             // Устанавливаем хешированный пароль
+//             $this->password = $hashedPassword;
+//         }
+
+//         return $this;
+//     }
+public function setPassword(string $password): static
     {
-        // Убедимся, что пароль не пустой
-        if (!empty($password)) {
-            // Хешируем пароль с использованием Bcrypt
-            $options = ['cost' => 13];
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
-
-            // Устанавливаем хешированный пароль
-            $this->password = $hashedPassword;
-        }
-
+        $this->password = $password;
         return $this;
     }
-
-
+    public function validatePassword(UserPasswordHasherInterface $passwordHasher): void
+    {
+        if ($this->password !== null) {
+            $this->password = $passwordHasher->hashPassword($this, $this->password);
+        }
+    }
     /**
      * @see UserInterface
      */

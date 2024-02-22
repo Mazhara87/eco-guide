@@ -1,8 +1,13 @@
-{# templates/community/index.html.twig #}
 
 {% extends 'base.html.twig' %}
 
 {% block title %}Communauté et Forum{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/forum.css') }}">
+
+{% endblock %}
 
 {% block body %}
     <body class="home">
@@ -13,7 +18,7 @@
             <h2>Dernières Discussions</h2>
             <ul>
                 {% for post in posts %}
-                    <li>
+                    <li class="block">
                         <a href="{{ path('app_forum_show_post_details', {'id': post.id}) }}">
                             {{ post.title }}
                         </a>
@@ -21,15 +26,15 @@
                 {% endfor %}
             </ul>
 
-            <h2>Prochains Événements</h2>
+            {# <h2>Prochains Événements</h2>
             <ul>
                 <li><a href="#">Nettoyage communautaire le samedi 15 mars</a></li>
                 <li><a href="#">Atelier de compostage le jeudi 20 mars</a></li>
-            </ul>
+            </ul> #}
 
  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-            <a href="{{ path('app_forum_create_post') }}" class="btn btn-primary">Créer une Nouvelle Discussion</a>
+            <a href="{{ path('app_forum_create_post') }}" class="btn">Créer une Nouvelle Discussion</a>
              {% endif %}
         </div>
     </body>

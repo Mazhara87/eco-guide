@@ -1,0 +1,110 @@
+/* forum.css */
+ 
+/* Общие стили для страницы форума */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+ 
+.container {
+    margin-top: 20px;
+}
+
+h1, h2 {
+    color: #587a23;
+    border-bottom: 2px solid #587a23;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeInUp 1s ease;
+}
+
+/* Стили для блоков с заголовками форума */
+.block {
+    background-color: beige;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+}
+
+.block:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для списка последних обсуждений */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Стили для каждого элемента списка */
+li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  
+    padding-bottom: 10px;
+}
+
+/* Добавим иконку перед каждым элементом списка */
+li.block::before {
+    content: "\2022"; /* Знак маркера (круг) */
+    color: #587a23;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Стили для ссылок в списке */
+a {
+    text-decoration: none;
+    color: #293514;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #587a23;
+}
+
+/* Стили для кнопки "Créer une Nouvelle Discussion" */
+.btn {
+    align-self: flex-end;
+    margin-top: 20px;
+    margin-left: auto; /* Размещение справа */
+    padding: 15px 30px;
+    background-color: #587a23;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.btn:hover {
+    background-color: #4b6420;
+    transform: scale(1.05);
+}
+
+/* Добавим анимацию для входящих внутрь блоков */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Применим анимацию ко всем блокам */
+.block {
+    animation: fadeInUp 1s ease;
+}

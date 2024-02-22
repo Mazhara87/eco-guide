@@ -1,3 +1,63 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Styles généraux pour les petits écrans */
+@media only screen and (max-width: 767px) {
+  .container {
+    grid-template-columns: 1fr; /* Une seule colonne pour les petits écrans */
+    gap: 10px;
+  }
+
+
+  /* Ajoutez d'autres styles spécifiques pour les petits écrans si nécessaire */
+}
+
+/* Styles pour les écrans de taille moyenne */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes pour les écrans de taille moyenne */
+  }
+
+  /* Ajoutez d'autres styles spécifiques pour les écrans de taille moyenne si nécessaire */
+}
+
+/* Styles pour les grands écrans */
+@media only screen and (min-width: 992px) {
+  .container {
+    grid-template-columns: repeat(5, 1fr); /* Retour à cinq colonnes pour les grands écrans */
+  }
+
+ 
+}
+
+/* Styles pour le menu de navigation */
+nav {
+  flex-direction: column; /* Mettez le menu en colonne pour les petits écrans */
+}
+
+nav a {
+  margin-right: 0; /* Ajustez la marge pour les petits écrans */
+}
+
+/* Styles pour le contenu principal */
+.main-content {
+  padding: 10px; /* Ajustez les marges pour un meilleur espacement sur les petits écrans */
+}
+
+/* Styles pour le pied de page */
+/* footer {
+  flex-direction: column; 
+  height: auto; 
+} */
+
+h1{
+  color: #587a23;
+}
+
+
 /* Стиль для футера */
 footer {
 
@@ -30,8 +90,8 @@ body {
 header,
 footer {
   background-color: #c6e3a3;
-  color: #fff;
-  padding: 10px;
+  color: #201d1d;
+  padding: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,7 +114,7 @@ footer {
 nav a,
 .footer-content a {
   text-decoration: none;
-  color: #fff;
+  color: #587a23;
   font-weight: bold;
   font-size: 14px;
   transition: color 0.3s ease;
@@ -96,7 +156,7 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #fff;
+    color: #587a23;
     font-weight: bold;
     font-size: 14px;
     transition: color 0.3s ease;
@@ -150,7 +210,7 @@ nav a {
 }
 
 .social-links a:hover {
-    color: #ffd700; /* измените цвет при наведении на ссылку */
+    color: #587a23; /* измените цвет при наведении на ссылку */
 }
 
 /* .subscribe-form input,
@@ -161,7 +221,7 @@ nav a {
 
 .subscribe-form button {
     background-color: #333;
-    color: #fff;
+    color: #587a23;
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -169,21 +229,21 @@ nav a {
 }
 
 .subscribe-form button:hover {
-    background-color: #ffd700; /* измените цвет при наведении на кнопку */
+    background-color: #587a23; /* измените цвет при наведении на кнопку */
 }
 
 /* Добавьте стили для страницы "Утилизация и сортировка" */
 .utilization-instructions,
 .useful-tips {
-    background-color: #fff;
+    background-color: #587a23;
     padding: 20px;
     margin: 20px 0;
 }
 
 .utilization-instructions h2,
 .useful-tips h2 {
-    color: #333;
-    border-bottom: 2px solid #333;
+    color: #587a23;
+    border-bottom: 2px solid #587a23;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
@@ -196,8 +256,8 @@ nav a {
 }
 
 .forum h2 {
-    color: #333;
-    border-bottom: 2px solid #333;
+    color: #587a23;
+    border-bottom: 2px solid #587a23;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
@@ -210,8 +270,8 @@ nav a {
 }
 
 .project-list h2 {
-    color: #333;
-    border-bottom: 2px solid #333;
+    color: #587a23;
+    border-bottom: 2px solid #587a23;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
@@ -224,8 +284,8 @@ nav a {
 }
 
 .latest-posts h2 {
-    color: #333;
-    border-bottom: 2px solid #333;
+    color: #587a23;
+    border-bottom: 2px solid #587a23;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
@@ -233,14 +293,14 @@ nav a {
 /* Добавьте стили для страницы "Контакты и подписка" */
 .contact-info,
 .subscribe-form {
-    background-color: #fff;
+    background-color: #587a23;
     padding: 20px;
     margin: 20px 0;
 }
 
 .contact-info h2,
 .subscribe-form h2 {
-    color: #333;
+    color: #587a23;
     border-bottom: 2px solid #333;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -342,7 +402,7 @@ nav a {
 .hero-banner a.button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #587a23;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -350,14 +410,45 @@ nav a {
 }
 
 .hero-banner a.button:hover {
-  background-color: #0056b3;
+  background-color: #587a23;
 }
 
 /* Стили для баннера */
-.banner-section img {
-  width: 67%;
+.banner-section {
+  width: 100%;
   height: 500px;
+  background-image: url('../images/banner-home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: border-box;
 }
+
+
+
+
+.card-custom{
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px;
+  border: 0.5px solid black;
+  transition: transform 1s;
+  
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
+
+}
+
+.card-custom:hover{
+  transform: scale(1.05);
+}
+
+#cards{
+  margin-top: 50px;
+  padding: 30px;
+}
+
+
 
 .banner-content {
   position: absolute;
@@ -390,14 +481,14 @@ article {
 
 /* Heading Styles */
 h2 {
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
+  color: #587a23;
+  border-bottom: 2px solid #587a23;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
 
 h3 {
-  color: #333;
+  color: #587a23;
   border-bottom: 2px solid #333;
   padding-bottom: 10px;
   margin-bottom: 10px;
@@ -406,17 +497,18 @@ h3 {
 /* Paragraph Styles */
 p {
   line-height: 1.6;
+  color: #587a23;
 }
 
 /* Link Styles */
 a {
-  color: #007bff;
+  color: #587a23;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: #0056b3;
+  color: #587a23;
 }
 
 /* Общие стили для всех блоков */
@@ -538,4 +630,5 @@ body {
 footer {
   margin-top: auto; /* Футер прижимается к низу, если контента мало */
 }
+
 

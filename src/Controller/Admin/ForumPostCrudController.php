@@ -22,7 +22,8 @@ class ForumPostCrudController extends AbstractCrudController
         return [
             TextField::new('title'),
             TextEditorField::new('text'),
-            AssociationField::new('user')
+            AssociationField::new('user'),
+            TextEditorField::new('summary'),
         ];
     }
     
