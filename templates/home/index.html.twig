@@ -15,7 +15,7 @@
 			background-color: transparent;
 		}
 
-		.carousel-inner {
+		/* .carousel-inner {
 			display: flex;
 			justify-content: space-between;
 			position: relative;
@@ -30,10 +30,10 @@
 		}
 
 		/* Поднимаем карточку при наведении */
-		.carousel-item:hover {
+		/* .carousel-item:hover {
 			opacity: 1;
 			transform: translateY(-10px);
-		}
+		} */ 
 
 		/* Добавляем стили для каждой секции */
 		.latest-news,
@@ -72,28 +72,27 @@
 
 
 	<!-- Hero Banner -->
-	<div
-		class="banner-section">
-		{# <img src="{{ asset('assets/images/banner-home.png') }}" alt="Nature Banner" width="100%" height="auto"> #}
+	<div class="banner-section">
+		<img src="{{ asset('assets/images/banner-home.png') }}" alt="Nature Banner" width="100%" height="auto">
 		<div class="banner-content">
 			<h1>Guidons le changement, préservons notre environnement</h1>
 		</div>
 	</div>
 
 
-	<section id="cards" 
-		class="container d-flex justify-content-center gap-5">
+	<section
+		id="cards" class="container d-flex justify-content-center gap-5">
 		{# Latest news #}
 		<div class="card-custom">
 			<h2>Dernières actualités</h2>
-
-			{% for post in latest_posts %}
+			{% for article in latest_articles %}
 				<article>
-					<h3>{{ post.getTitle() }}</h3>
+					<h3>{{ article.getTitle() }}</h3>
 					{# <p>{{ post.getSummary() }}</p> #}
-					<a href="{{ path('app_blog', {'id': post.getId()}) }}">Lire la suite</a>
+					<a href="{{ path('app_blog') }}">Lire la suite</a>
 				</article>
 			{% endfor %}
+
 
 		</div>
 
@@ -103,10 +102,14 @@
 			<h2>Projets</h2>
 			{% for project in featured_projects %}
 				<article>
-					<h3>{{ project.getName() }}</h3>
+					{# <h3>{{ project.getName() }}</h3> #}
+					<h3>
+						<a href="{{ path('app_projects', {'id': project.getId()}) }}">{{ project.getName() }}</a>
+					</h3>
+
 					<!-- Добавлен блок для отображения только названия проекта -->
 					{# <p>{{ project.getDescription()|raw }}</p>
-																																																											                <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a> #}
+																																																																					                <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a> #}
 				</article>
 			{% endfor %}
 		</div>
@@ -115,6 +118,15 @@
 		{# Tri #}
 		<div class="card-custom">
 			<h2>Tri et Recyclage</h2>
+			<p>Titre et description de la section.</p>
+			<section>
+				<h3>Instructions pour le tri des déchets</h3>
+				<!-- Добавьте секции с инструкциями, графическими иллюстрациями и анимациями -->
+			</section>
+			<section>
+				<h3>Conseils utiles</h3>
+				<!-- Добавьте блок с полезными советами -->
+			</section>
 
 		</div>
 
@@ -122,6 +134,13 @@
 		{# Forum #}
 		<div class="card-custom">
 			<h2>Forum</h2>
+			{% for post in latest_posts %}
+				<article>
+					<h3>{{ post.getTitle() }}</h3>
+					{# <p>{{ post.getSummary() }}</p> #}
+					<a href="{{ path('app_forum_show_post_details', {'id': post.getId()}) }}">Lire la suite</a>
+				</article>
+			{% endfor %}
 
 		</div>
 
@@ -129,93 +148,16 @@
 		{# Contact #}
 		<div class="card-custom">
 			<h2>Contact</h2>
-
+			<section>
+				<h3>Email:<br>
+					info@ecoguide.com
+					<br>
+					<br>
+					Téléphone:<br>
+					+33 123 456 789</h3>
+			</section>
 		</div>
 
 	</section>
 
-	<div
-		class="container d-flex justify-content-center">
-		<!-- Section for Cards -->
-		<section
-			class="card-section container">
-			<!-- Carousel for Latest News -->
-			<div class="carousel-item latest-news" tabindex="0">
-				<section>
-					<h2>Dernières actualités</h2>
-					{% for post in latest_posts %}
-						<article>
-							<h3>{{ post.getTitle() }}</h3>
-							{# <p>{{ post.getSummary() }}</p> #}
-							<a href="{{ path('app_blog', {'id': post.getId()}) }}">Lire la suite</a>
-						</article>
-					{% endfor %}
-				</section>
-			</div>
-
-			<!-- Carousel for Featured Projects -->
-			<div class="carousel-item featured-projects" tabindex="0">
-				<section>
-					<h2>Projets</h2>
-					{% for project in featured_projects %}
-						<article>
-							<h3>{{ project.getName() }}</h3>
-							<!-- Добавлен блок для отображения только названия проекта -->
-							{# <p>{{ project.getDescription()|raw }}</p>
-																																																													                <a href="{{ path('app_projects', {'id': project.getId()}) }}">Détails du projet</a> #}
-						</article>
-					{% endfor %}
-				</section>
-			</div>
-
-			<!-- Carousel for Utilization and Sorting -->
-			<div class="carousel-item utilization" tabindex="0">
-				<section>
-					<h2>Tri et Recyclage</h2>
-					<p>Titre et description de la section.</p>
-					<section>
-						<h3>Instructions pour le tri des déchets</h3>
-						<!-- Добавьте секции с инструкциями, графическими иллюстрациями и анимациями -->
-					</section>
-					<section>
-						<h3>Conseils utiles</h3>
-						<!-- Добавьте блок с полезными советами -->
-					</section>
-				</section>
-			</div>
-
-			<!-- Carousel for Community and Forum -->
-			<div class="carousel-item community" tabindex="0">
-				<section>
-					<h2>Forum</h2>
-					<p>Titre et description</p>
-					<section>
-						<h3>Forum</h3>
-						<!-- Добавьте форум для обсуждения, профилей участников и форму для создания новых тем и сообщений -->
-					</section>
-				</section>
-			</div>
-
-			<!-- Carousel for Projects and Initiatives -->
-			<div class="carousel-item projects" tabindex="0">
-				<section>
-					<h2>Contact</h2>
-					{# <p>Заголовок и описание раздела.</p> #}
-					<section>
-						<h3>Email:<br>
-							info@ecoguide.com
-							<br>
-							Téléphone:<br>
-							+33 123 456 789</h3>
-						<!-- Добавьте список текущих проектов с краткими описаниями и изображениями -->
-					</section>
-				</section>
-			</div>
-
-			<!-- Add other sections as needed -->
-
-		</section>
-	</div>
-</div>
-<div class="container" id="test">
-{% endblock %}
+</section></div></div><div class="container" id="test">{% endblock %}

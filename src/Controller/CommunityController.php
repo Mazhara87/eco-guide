@@ -28,6 +28,9 @@ class CommunityController extends AbstractController
 
     // ...
 
+    /**
+     * @Route("/create-comment/{id}", name="app_forum_create_comment")
+     */
     #[Route('/create-comment/{id}', name: 'app_forum_create_comment')]
     public function createComment(Request $request, ForumPost $post, EntityManagerInterface $entityManager): Response
     {
