@@ -1,101 +1,102 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Projets et Initiatives{% endblock %}
+{% block title %}Projets et Initiatives
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
+	{# {{ parent() }} #}
+	<link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
 
 {% endblock %}
 
 {% block body %}
-    <h2>Projets et Initiatives</h2>
-    <div class="container mt-2">
-       {% for project in projects %}
-    <div class="item">
-        <div class="scene scene--card">
-            <div class="card">
-                <div class="card__face card__face--front">
-                    <p class="item-card-title mt-3 mb-3">{{ project.getName }}</p>
-                    <br>
-                     <span id="like-count-{{ project.id }}" class="like-count"> {{ project.projectSupporters.count() }} Likes
-                    
-                     </span> 
-<form class="like-form" data-project-id="{{ project.id }}">
-                        <button type="submit" class="like-button">Like</button>
-                    </form>
-                    <img src="{{ asset('assets/images/images.jpg') }}" alt="Project Image">
-                </div>
+	<h2>Projets et Initiatives</h2>
+	<div class="mt-2">
+		{% for project in projects %}
+			<div class="item">
+				<div class="scene scene--card">
+					<div class="card">
+						<div class="card__face card__face--front">
+							<p class="item-card-title mt-3 mb-3">{{ project.getName }}</p>
+							<br>
+							<span id="like-count-{{ project.id }}" class="like-count">
+								{{ project.projectSupporters.count() }}
+								Likes
+
+							</span>
+							<form class="like-form" data-project-id="{{ project.id }}">
+								<button type="submit" class="like-button">Like</button>
+							</form>
+							<img src="{{ asset('assets/images/images.jpg') }}" alt="Project Image">
+						</div>
 
 
+						<div class="card__face card__face--back">
+							<p class="project-description">
+								{{ project.getDescription | raw }}
+							</p>
 
-                <div class="card__face card__face--back">
-                    <p class="project-description">
-                       {{ project.getDescription | raw }}
-                    </p>                
-    
 
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
 
-    </div>
+	</div>
 
-<script>
-var cards = document.querySelectorAll('.card');
+	<script>
+		var cards = document.querySelectorAll('.card');
 
-[...cards].forEach((card)=>{
-  card.addEventListener( 'click', function() {
-    card.classList.toggle('is-flipped');
-  });
+[... cards].forEach((card) => {
+card.addEventListener('click', function () {
+card.classList.toggle('is-flipped');
 });
-    document.addEventListener('DOMContentLoaded', function () {
-        const likeForms = document.querySelectorAll('.like-form');
+});
+document.addEventListener('DOMContentLoaded', function () {
+const likeForms = document.querySelectorAll('.like-form');
 
-        likeForms.forEach(form => {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+likeForms.forEach(form => {
+form.addEventListener('submit', function (event) {
+event.preventDefault();
 
-                const projectId = form.dataset.projectId;
+const projectId = form.dataset.projectId;
 
-                $.ajax({
-                    type: 'POST',
-                    url: `/like/${projectId}`,
-                    dataType: 'json',
-                success: function (response) {
-    console.log('Ответ сервера:', response);
+$.ajax({
+type: 'POST',
+url: `/like/${projectId}`,
+dataType: 'json',
+success: function (response) {
+console.log('Ответ сервера:', response);
 
-    if (response.likeCount !== undefined) {
-        console.log('Лайк добавлен');
-        console.log('Количество лайков: ' + response.likeCount);
-        console.log('Информация о проекте:', response.project);
+if (response.likeCount !== undefined) {
+console.log('Лайк добавлен');
+console.log('Количество лайков: ' + response.likeCount);
+console.log('Информация о проекте:', response.project);
 
-        const likeCountElement = document.getElementById(`like-count-${projectId}`);
-        if (likeCountElement) {
-            likeCountElement.textContent = response.likeCount;
-        }
+const likeCountElement = document.getElementById (`like-count-${projectId}`);
+if (likeCountElement) {
+likeCountElement.textContent = response.likeCount;
+}
 
-        alert('Votre soutien est ajouté à ce projet !');
-    } else {
-        console.error('Ошибка:', response.message);
+alert('Votre soutien est ajouté à ce projet !');
+} else {
+console.error('Ошибка:', response.message);
 
-        if (response.message.includes('Лайк уже добавлен')) {
-            alert('Votre soutien est ajouté à ce projet !');
-        } else {
-            alert('Ошибка: ' + response.message);
-        }
-    }
+if (response.message.includes('Лайк уже добавлен')) {
+alert('Votre soutien est ajouté à ce projet !');
+} else {
+alert('Ошибка: ' + response.message);
+}
+}
 },
-                    error: function (xhr, status, error) {
-                        // Ошибка при отправке запроса
-                        console.error('Ошибка:', xhr.responseText);
-                        alert('Erreur lors d\'ajout du soutien');
-                    }
-                });
-            });
-        });
-    });
-</script>
+error: function (xhr, status, error) { // Ошибка при отправке запроса
+console.error('Ошибка:', xhr.responseText);
+alert('Erreur lors d\'ajout du soutien');
+}
+});
+});
+});
+});
+	</script>
 {% endblock %}
